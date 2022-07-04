@@ -1,0 +1,175 @@
+@import 'variables';
+@import '../mixins/z-index';
+@import '../mixins/media-queries';
+
+.text-field-line {
+  cursor: text;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  position: relative;
+  padding: 20px 0 4px;
+  padding: var(--toss-font-size-20) 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &.select {
+    width: 100%;
+    margin: 0;
+    border: 0 solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    .text-field-line__input {
+      width: 100%;
+      text-align: left;
+      overflow: hidden;
+    }
+    &::after {
+      content: '⠀';
+      width: 0;
+    }
+  }
+
+  &.text-field-line--disabled {
+    cursor: default;
+  }
+}
+
+.text-field-line__label {
+  position: absolute;
+  top: 22px;
+  top: var(--toss-font-size-22, 22px);
+  left: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: transform $text-field-line-transition-duration
+      $text-field-line-transition-timing-function,
+    font-size $text-field-line-transition-duration $text-field-line-transition-timing-function,
+    font-weight $text-field-line-transition-duration $text-field-line-transition-timing-function,
+    color $text-field-line-transition-duration $text-field-line-transition-timing-function;
+
+  transform: translateY(-22px);
+  transform: translateY(calc(-1 * var(--toss-font-size-22, 22px)));
+  color:$grey800;
+
+  .text-field-line:not(.text-field-line--error).text-field-line--has-value
+    .text-field-line__input:focus
+    ~ &,
+  .text-field-line--focused & {
+    color: $blue700;
+  }
+
+  .text-field-line--error & {
+    color: $red600;
+  }
+
+  .text-field-line:not(.text-field-line--has-value) .text-field-line__input ~ & {
+    top: calc((0.409 * 22px) / 2 + 22px);
+    top: calc(
+      (var(--toss-line-height-22, 22px) - var(--toss-font-size-22, 22px)) / 2 +
+        var(--toss-font-size-22, 22px)
+    );
+    transform: translateY(0);
+    font-size: 22px;
+    font-size: var(--toss-font-size-22, 22px);
+    font-weight: 500;
+    color: $grey500;
+
+    line-height: calc(13px * 2.2);
+    line-height: calc(var(--toss-font-size-13) * 2.2);
+  }
+
+  .text-field-line.text-field-line--has-value.text-field-line--hide-label
+    .text-field-line__input
+    ~ & {
+    display: none;
+  }
+}
+
+.text-field-line__input {
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  padding: 0;
+
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  color: $grey900;
+  caret-color: $blue400;
+
+  &[type='search'] {
+    appearance: none;
+  }
+
+  .text-field-line--error & {
+    caret-color: $red600;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    color: $grey400;
+    -webkit-text-fill-color:$grey500;
+    opacity: 1;
+  }
+
+  &::placeholder {
+    opacity: 0;
+  }
+
+  &--secured {
+    -webkit-text-security: disc;
+  }
+
+  @include isIE {
+    &:focus ~ .text-field-line__bottom-line {
+      background-color: $blue400;
+    }
+  }
+}
+
+.text-field-line__input-blank {
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  width: unset;
+}
+
+.text-field-line__space {
+  flex: 1;
+}
+
+.text-field-line__bottom-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background-color: $grey100;
+  transition: background-color $text-field-line-transition-duration
+    $text-field-line-transition-timing-function;
+
+  .text-field-line--focused & {
+    background-color: $blue400;
+  }
+
+  .text-field-line--error & {
+    background-color: $red600;
+  }
+
+  .text-field-line--disabled & {
+    background-color: transparent;
+  }
+}

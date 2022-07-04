@@ -1,0 +1,53 @@
+@import "variables";
+@import "../colors";
+
+.list-row {
+  position: relative;
+  background-color: transparent;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  transition: background-color $button-transition-duration ease-in-out;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  &--vertical-padding-large {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  &--vertical-padding-medium {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  &--vertical-padding-small {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  &--vertical-padding-extraSmall {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .text {
+    color:$grey700;
+    max-width: 100%;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &--display-inline {
+      flex: none;
+    }
+
+    &--multi-line {
+      line-height: 1.5;
+    }
+
+    & + .text {
+      margin-top: 3px;
+    }
+  }
+}

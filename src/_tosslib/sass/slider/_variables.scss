@@ -1,0 +1,10 @@
+@use "sass:math";
+
+$slider-height: 40px;
+$slider-knob-radius: 18px;
+$track-height: 5px;
+$track-border-radius: 2.5px;
+
+$track-top: math.div($slider-height - $track-height, 2);
+
+$horizontal-padding: 4px;

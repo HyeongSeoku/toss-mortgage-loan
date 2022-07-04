@@ -1,0 +1,176 @@
+@use "sass:math";
+
+@mixin hover-active($selector) {
+    @media (hover: hover) and (pointer: fine) {
+        #{$selector}:hover {
+            @content;
+        }
+    }
+
+    #{$selector}:active {
+        @content;
+    }
+}
+
+
+$button-transition-duration: 0.1s;
+$button-transition: color $button-transition-duration ease-in-out,
+    background-color $button-transition-duration ease-in-out,
+    border-color $button-transition-duration ease-in-out,
+    box-shadow $button-transition-duration ease-in-out,
+    opacity $button-transition-duration ease-in-out;
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    white-space: nowrap;
+    user-select: none;
+    border: 0 solid transparent;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-appearance: none;
+    transition: $button-transition;
+    overflow: hidden;
+    transform: translateZ(0);
+    padding: 0;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+
+    &:not(:disabled):not(.disabled):active {
+        background-image: none;
+    }
+
+    &::after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: transparent;
+        transition: background-color $button-transition-duration ease-in-out;
+    }
+
+    color: $white;
+
+    @include hover-active('&:not(:disabled):not(.disabled)') {
+        &::after {
+            background-color: $greyOpacity400;
+        }
+    }
+
+    &.button--style-fill {
+
+        &:disabled,
+        &.disabled {
+            opacity: 0.26;
+        }
+
+        @include hover-active('&:not(:disabled):not(.disabled)') {
+            &::after {
+                background-color: rgba(0, 0, 0, 0.26);
+            }
+        }
+    }
+
+    background-color: $blue500;
+}
+
+.button--size-big {
+    $sizeName: 'big';
+    $minWidth: 96px;
+    $height: 56px;
+    $maxHeight: 56px;
+    $padding: 15px 16px;
+    $loaderSize: 26px;
+    $loaderSpacing: 8px;
+    $borderRadius: 16px;
+
+    width:100%;
+    border-radius: $borderRadius;
+
+    .button__content {
+      min-width: $minWidth;
+      height: $height;
+      max-height: $maxHeight;
+      padding: $padding;
+    }
+
+    .button__loader {
+      display: flex;
+      $negativeLoaderMargin: #{math.div(strip-unit($loaderSize), -2)}px;
+      margin: $negativeLoaderMargin 0;
+
+      .loader__animation {
+        stroke: currentColor;
+        width: $loaderSize;
+        height: $loaderSize;
+      }
+    }
+    
+
+    &.button--wrap {
+      > .button__content {
+        height: auto;
+      }
+    }
+
+    &:not(.button--wrap) {
+      & > .button__content {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+
+.button--type-dark {
+    background-color: $greyBackground;
+
+    &.button--style-weak {
+        color: $grey700;
+        background-color: rgb(242, 244, 246);
+
+        @include hover-active('&:not(:disabled):not(.disabled)') {
+            background-color: rgb(208, 212, 216);
+        }
+    }
+}
+
+
+.button--wrap {
+    white-space: normal;
+}
+
+a.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+a.button.disabled,
+fieldset:disabled a.button {
+    pointer-events: none;
+}
+
+.button__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}

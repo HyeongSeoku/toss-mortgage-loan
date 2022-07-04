@@ -1,0 +1,19 @@
+$z-index: (
+  toast: 10001,
+  bottom-sheet: 10000,
+  dimmer: 9999,
+  fixed-bottom-cta: 50,
+  modal: 100,
+  calendar-selected-cell: 1,
+  calendar-day-dot: 2,
+  list-row-dimmer: -1,
+  list-row-while-dimming: 1,
+  switch-label: 1,
+  text-field-styled-layer: 1,
+  hidden: -9999,
+  logo-slide-mask: 1,
+);
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
